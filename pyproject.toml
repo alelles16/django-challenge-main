@@ -7,7 +7,7 @@ authors = ["Malazay SouthernCode <alexisgiovoglanian@southerncode.us>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = "^4.0.1"
-django-rest-framework = "^0.1.0"
+djangorestframework = "^3.15.1"
 psycopg2 = "^2.9.9"
 
 [tool.poetry.dev-dependencies]

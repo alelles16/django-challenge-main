@@ -1,5 +1,7 @@
 from django.db import models
 
+_property = property
+
 
 class Property(models.Model):
     """
@@ -11,6 +13,9 @@ class Property(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.id
 
 
 class PricingRule(models.Model):
@@ -29,6 +34,9 @@ class PricingRule(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return f'Specific day:{self.specific_day} - Min stay length: {self.min_stay_length} - Fixed price: {self.fixed_price} - Price modifier: {self.price_modifier}'
+
 
 class Booking(models.Model):
     """
@@ -43,3 +51,7 @@ class Booking(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @_property
+    def stay_length(self):
+        return (self.date_end - self.date_start).days + 1
