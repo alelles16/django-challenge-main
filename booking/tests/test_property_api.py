@@ -36,7 +36,7 @@ class PublicPropertyApiTest(TestCase):
         Property.objects.create(name='Test Hotel', base_price=20)
 
         res = self.client.get(PROPERTIES_URL)
-        properties = Property.objects.all().order_by('-name')
+        properties = Property.objects.all().order_by('-created_at')
         serializer = PropertySerializer(properties, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
@@ -50,7 +50,7 @@ class PublicPropertyApiTest(TestCase):
         res = self.client.patch(url, payload)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         property_obj.refresh_from_db()
-        self.assertAlmostEqual(property_obj.name, payload['name'])
+        self.assertEqual(property_obj.name, payload['name'])
 
     def test_delete_property(self):
         property_obj = Property.objects.create(name='Test House', base_price=10)

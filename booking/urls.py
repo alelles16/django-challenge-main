@@ -7,7 +7,7 @@ from booking import views
 router = DefaultRouter()
 router.register('bookings', views.BookingViewSet)
 router.register('properties', views.PropertyViewSet)
-router.register('pricing_rules', views.PricingRuleViewSet)
+router.register('pricingrules', views.PricingRuleViewSet)
 
 app_name = 'booking'
 

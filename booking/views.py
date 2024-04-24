@@ -11,13 +11,13 @@ from booking import serializers
 class PropertyViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.PropertySerializer
-    queryset = Property.objects.all()
+    queryset = Property.objects.all().order_by('-created_at')
 
 
-class PricingRuleViewSet(viewsets.ModelViewSet):\
+class PricingRuleViewSet(viewsets.ModelViewSet):
 
-    serializer_class = serializers.PricingRule
-    queryset = PricingRule.objects.all()
+    serializer_class = serializers.PricingRuleSerializer
+    queryset = PricingRule.objects.all().order_by('-created_at')
 
 
 class BookingViewSet(viewsets.ModelViewSet):
@@ -26,7 +26,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     """
 
     serializer_class = serializers.BookingSerializer
-    queryset = Booking.objects.all()
+    queryset = Booking.objects.all().order_by('-created_at')
 
     def _get_range_dates(self, booking: Booking) -> List[date]:
         """
