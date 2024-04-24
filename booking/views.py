@@ -4,8 +4,20 @@ from typing import List, Optional, Tuple
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from core.models import Booking, PricingRule
+from core.models import Booking, PricingRule, Property
 from booking import serializers
+
+
+class PropertyViewSet(viewsets.ModelViewSet):
+
+    serializer_class = serializers.PropertySerializer
+    queryset = Property.objects.all()
+
+
+class PricingRuleViewSet(viewsets.ModelViewSet):\
+
+    serializer_class = serializers.PricingRule
+    queryset = PricingRule.objects.all()
 
 
 class BookingViewSet(viewsets.ModelViewSet):
