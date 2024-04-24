@@ -10,6 +10,7 @@ class PropertySerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'base_price']
         read_only_fields = ['id']
 
+
 class BookingSerializer(serializers.ModelSerializer):
 
     class Meta:

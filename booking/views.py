@@ -1,5 +1,5 @@
 from datetime import timedelta, date
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -141,10 +141,10 @@ class BookingViewSet(viewsets.ModelViewSet):
 
         final_price = 0
 
-        for date in range_dates:
+        for date_obj in range_dates:
             applicable_rules = [
                 rule for rule in rules_to_apply
-                if self._is_rule_applicable(rule, total_days, date)
+                if self._is_rule_applicable(rule, total_days, date_obj)
             ]
             most_relevant_rule = self._select_max_rule(applicable_rules)
 

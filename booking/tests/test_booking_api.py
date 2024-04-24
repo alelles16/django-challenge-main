@@ -33,7 +33,6 @@ def create_pricing_rule(property, **params):
     return PricingRule.objects.create(property=property, **defaults)
 
 
-
 def detail_url(booking_id):
     return reverse('booking:booking-detail', args=[booking_id])
 
