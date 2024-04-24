@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -5,6 +7,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from core.models import Booking, PricingRule, Property
+from booking.serializers import BookingSerializer
 
 
 BOOKINGS_URL = reverse('booking:booking-list')
@@ -28,6 +31,11 @@ def create_pricing_rule(property, **params):
     }
     defaults.update(params)
     return PricingRule.objects.create(property=property, **defaults)
+
+
+
+def detail_url(booking_id):
+    return reverse('booking:booking-detail', args=[booking_id])
 
 
 class PublicBookingApiTests(TestCase):
@@ -304,3 +312,70 @@ class PublicBookingApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(booking.property, property_obj)
         self.assertEqual(booking.final_price, 80)
+
+    def test_retrieve_bookings(self):
+        property_1 = create_property(name='Test House 1')
+        property_2 = create_property(name='Test House 2')
+        create_pricing_rule(property=property_1)
+        create_pricing_rule(property=property_2)
+        self.create_booking(
+            property=property_1,
+            date_start='2022-01-01',
+            date_end='2022-01-10'
+        )
+        self.create_booking(
+            property=property_2,
+            date_start='2022-02-01',
+            date_end='2022-02-10'
+        )
+        res = self.client.get(BOOKINGS_URL)
+        bookings = Booking.objects.all().order_by('-created_at')
+        serializer = BookingSerializer(bookings, many=True)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
+
+    def test_update_booking_and_recalculate_final_price(self):
+        property_obj = create_property()
+        PricingRule.objects.create(
+            property=property_obj,
+            price_modifier=-10,
+            min_stay_length=7
+        )
+        booking = Booking.objects.create(
+            property=property_obj,
+            date_start='2022-01-01',
+            date_end='2022-01-10',
+            final_price=90
+        )
+        payload = {
+            'date_end': '2022-01-12'
+        }
+        url = detail_url(booking_id=booking.id)
+        res = self.client.patch(url, payload)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        booking.refresh_from_db()
+        self.assertEqual(booking.property, property_obj)
+        self.assertEqual(
+            booking.date_end,
+            datetime.strptime(payload['date_end'], '%Y-%m-%d').date()
+        )
+        self.assertEqual(booking.final_price, 108)
+
+    def test_delete_booking(self):
+        property_obj = create_property()
+        PricingRule.objects.create(
+            property=property_obj,
+            price_modifier=-10,
+            min_stay_length=7
+        )
+        booking = Booking.objects.create(
+            property=property_obj,
+            date_start='2022-01-01',
+            date_end='2022-01-10',
+            final_price=90
+        )
+        url = detail_url(booking_id=booking.id)
+        res = self.client.delete(url)
+
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Booking.objects.filter(id=booking.id).exists())

@@ -174,3 +174,21 @@ class BookingViewSet(viewsets.ModelViewSet):
             },
             status=status.HTTP_201_CREATED
         )
+
+    def update(self, request, *args, **kwargs):
+        """
+        Update a booking instance and calculate the final price.
+        """
+
+        super().update(request, *args, **kwargs)
+        booking = self.get_object()
+        booking.final_price = self._get_final_price(booking)
+        booking.save(update_fields=['final_price'])
+
+        return Response(
+            {
+                'final_price': booking.final_price,
+                'id': booking.id
+            },
+            status=status.HTTP_200_OK
+        )
