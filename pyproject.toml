@@ -11,6 +11,7 @@ djangorestframework = "^3.15.1"
 psycopg2 = "^2.9.9"
 drf-spectacular = "^0.27.2"
 django-filter = "^24.2"
+uwsgi = "2.0.23"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.0.0"

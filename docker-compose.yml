@@ -5,17 +5,19 @@ services:
       args:
         - DEV=true
     ports:
-      - "8000:8000"
+      - '8000:8000'
     volumes:
       - ./:/app
+      - dev-static-data:/vol/web
     command: >
-      sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+      sh -c 'python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000'
     environment:
       - DB_HOST=db
       - DB_NAME=devdb
       - DB_USER=postgres_user
       - DB_PASS=postgres_password
+      - DEBUG=1
     depends_on:
       - db
 
@@ -29,7 +31,8 @@ services:
       - POSTGRES_USER=postgres_user
       - POSTGRES_PASSWORD=postgres_password
     ports:
-      - "5432:5432"
+      - '5432:5432'
 
 volumes:
   dev-db-data:
+  dev-static-data:
