@@ -67,8 +67,8 @@ class PublicBookingApiTests(TestCase):
         )
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -94,8 +94,8 @@ class PublicBookingApiTests(TestCase):
         PricingRule.objects.bulk_create(pricing_rules)
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -120,8 +120,8 @@ class PublicBookingApiTests(TestCase):
 
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -141,8 +141,8 @@ class PublicBookingApiTests(TestCase):
 
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -162,8 +162,8 @@ class PublicBookingApiTests(TestCase):
 
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -184,8 +184,8 @@ class PublicBookingApiTests(TestCase):
 
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-04',
-            date_end='2022-01-04'
+            date_start='01-04-2022',
+            date_end='01-04-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -207,8 +207,8 @@ class PublicBookingApiTests(TestCase):
         )
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -227,8 +227,8 @@ class PublicBookingApiTests(TestCase):
         PricingRule.objects.bulk_create(pricing_rules)
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -247,8 +247,8 @@ class PublicBookingApiTests(TestCase):
         PricingRule.objects.bulk_create(pricing_rules)
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -267,8 +267,8 @@ class PublicBookingApiTests(TestCase):
         PricingRule.objects.bulk_create(pricing_rules)
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-04',
-            date_end='2022-01-04'
+            date_start='01-04-2022',
+            date_end='01-04-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -287,8 +287,8 @@ class PublicBookingApiTests(TestCase):
         PricingRule.objects.bulk_create(pricing_rules)
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-04',
-            date_end='2022-01-04'
+            date_start='01-04-2022',
+            date_end='01-04-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -304,8 +304,8 @@ class PublicBookingApiTests(TestCase):
         PricingRule.objects.bulk_create(pricing_rules)
         res = self.create_booking(
             property=property_obj,
-            date_start='2022-01-01',
-            date_end='2022-01-10'
+            date_start='01-01-2022',
+            date_end='01-10-2022'
         )
         booking = Booking.objects.get(id=res.data['id'])
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -347,7 +347,7 @@ class PublicBookingApiTests(TestCase):
             final_price=90
         )
         payload = {
-            'date_end': '2022-01-12'
+            'date_end': '01-12-2022'
         }
         url = detail_url(booking_id=booking.id)
         res = self.client.patch(url, payload)
@@ -356,7 +356,7 @@ class PublicBookingApiTests(TestCase):
         self.assertEqual(booking.property, property_obj)
         self.assertEqual(
             booking.date_end,
-            datetime.strptime(payload['date_end'], '%Y-%m-%d').date()
+            datetime.strptime(payload['date_end'], '%m-%d-%Y').date()
         )
         self.assertEqual(booking.final_price, 108)
 

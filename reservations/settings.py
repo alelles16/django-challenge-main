@@ -149,7 +149,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DATE_FORMAT': "%m-%d-%Y",
-    'DATE_INPUT_FORMAT': "%m-%d-%Y",
+    'DATE_INPUT_FORMATS': ["%m-%d-%Y"],
 }
 
 SPECTACULAR_SETTINGS = {
