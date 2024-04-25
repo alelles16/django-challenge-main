@@ -1,23 +1,29 @@
 from datetime import timedelta, date
 from typing import List, Optional
 
+from django_filters import rest_framework as filters
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from core.models import Booking, PricingRule, Property
 from booking import serializers
+from booking.filters import PropertyFilter, PricingRuleFilter, BookingFilter
 
 
 class PropertyViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.PropertySerializer
     queryset = Property.objects.all().order_by('-created_at')
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = PropertyFilter
 
 
 class PricingRuleViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.PricingRuleSerializer
     queryset = PricingRule.objects.all().order_by('-created_at')
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = PricingRuleFilter
 
 
 class BookingViewSet(viewsets.ModelViewSet):
@@ -27,6 +33,8 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.BookingSerializer
     queryset = Booking.objects.all().order_by('-created_at')
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = BookingFilter
 
     def _get_range_dates(self, booking: Booking) -> List[date]:
         """

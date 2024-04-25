@@ -15,7 +15,7 @@ class Property(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.id
+        return f'{self.id} - {self.name}'
 
 
 class PricingRule(models.Model):
@@ -56,3 +56,6 @@ class Booking(models.Model):
     @_property
     def stay_length(self):
         return (self.date_end - self.date_start).days + 1
+
+    def __str__(self) -> str:
+        return f'{self.property} - start: {self.date_start}, end: {self.date_end}, ${self.final_price}'
