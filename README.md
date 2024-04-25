@@ -10,7 +10,7 @@ Requirements:
 - Docker compose
 - PostgreSQL 15
 
-In this project we will use docker and docker-compose to facilitate the installation and replication of the development environment, define volumes and custom networks.
+In this project we're using docker and docker-compose to facilitate the installation and replication of the development environment, define volumes and custom networks.
 
 `docker-compose build`
 
@@ -18,7 +18,7 @@ Run project:
 
 `docker-compose up`
 
-In this case, we will use requirements.txt and requirements.dev.txt to install dependencies, but in the future we could implement poetry to manage dependencies in Docker.
+In this case, we are using requirements.txt and requirements.dev.txt to install dependencies, but in the future we could implement poetry to manage dependencies in Docker.
 
 Shut down the project:
 
@@ -30,7 +30,7 @@ Run tests:
 
 # Flake 8
 
-We will use flake8 to identify formatting and syntax errors
+We are using flake8 to identify formatting and syntax errors
 
 `docker-compose run --rm app sh -c "flake8"`
 
