@@ -47,8 +47,6 @@ http://ec2-34-207-117-105.compute-1.amazonaws.com/api/booking/
 
 -----
 
-Southern Code Django challenge
-
 This project represents a real life API which is used for listing and booking properties.
 
 We have some reduced versions of the models that the real app uses:
@@ -58,7 +56,6 @@ We have some reduced versions of the models that the real app uses:
 
 # Important Notes:
 - Dates are in the following format: “mm-dd-yyyy”
-- This is the first version of the code challenge. If you believe something is wrong or not clear enough, feel free to contact alexisgiovoglanian@southerncode.us or the recruiting team.
 
 
 # Tasks:
